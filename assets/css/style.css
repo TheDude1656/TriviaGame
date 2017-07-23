@@ -1,0 +1,22 @@
+            .container {
+                background-image: url("../images/background.jpg");
+                background-size: cover;
+                margin: auto;
+                padding: auto;
+                background-repeat: no-repeat;
+                min-height: 1024px;
+            }
+
+            .jumbotron {
+                background-color: transparent;
+            }
+
+            h1 {
+                text-align: center;
+                text-shadow: 2px 2px #ff0000;
+            }
+
+            .btn {
+                position: absolute;
+                left: 45%;
+            }
