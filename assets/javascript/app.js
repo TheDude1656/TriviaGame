@@ -1,7 +1,9 @@
 var questionsAnswers = [];
 var answers = [];
 var choicePicked;
+
 $(function() {
+
     $("#options").hide();
     $("#tLeft").hide();
     $("#clickme").click(function() {
@@ -36,8 +38,15 @@ $(function() {
         var choice = document.getElementsByClassName("list-group-item");
         for (i = 0; i < choice.length; i++) {
             choice[i].onclick = function() {
+                play();
                 console.log(this.text);
                 choicePicked = (this.text);
+
+                function play() {
+                    var audio = document.getElementById("coinclick");
+                    audio.play();
+                }
+
             }
         }
         console.log(response)
