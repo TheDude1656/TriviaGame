@@ -1,6 +1,7 @@
 var questionsAnswers = [];
 var answers = [];
 var choicePicked;
+var correctPick;
 
 $(function() {
 
@@ -25,6 +26,7 @@ $(function() {
 
         questionsAnswers.push(response);
         answers.push(questionsAnswers["0"].results["0"].correct_answer);
+        correctPick = (questionsAnswers["0"].results["0"].correct_answer);
         answers.push(questionsAnswers["0"].results["0"].incorrect_answers["0"]);
         answers.push(questionsAnswers["0"].results["0"].incorrect_answers["1"]);
         answers.push(questionsAnswers["0"].results["0"].incorrect_answers["2"]);
