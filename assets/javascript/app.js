@@ -1,5 +1,6 @@
 var questionsAnswers = [];
-
+var answers = [];
+var choicePicked;
 $(function() {
     $("#options").hide();
     $("#tLeft").hide();
@@ -19,16 +20,32 @@ $(function() {
         url: "https://opentdb.com/api.php?amount=10&category=15&difficulty=easy&type=multiple",
         method: "GET"
     }).done(function(response) {
+
         questionsAnswers.push(response);
+        answers.push(questionsAnswers["0"].results["0"].correct_answer);
+        answers.push(questionsAnswers["0"].results["0"].incorrect_answers["0"]);
+        answers.push(questionsAnswers["0"].results["0"].incorrect_answers["1"]);
+        answers.push(questionsAnswers["0"].results["0"].incorrect_answers["2"]);
+        answers.sort(function(a, b) {
+            return 0.5 - Math.random()
+        });
+        randomAnswers = answers.length;
+        for (i = 0; i < randomAnswers; i++) {
+            $("#options").append('<a href="#" class="list-group-item list-group-item-info">' + answers[i]);
+        }
+        var choice = document.getElementsByClassName("list-group-item");
+        for (i = 0; i < choice.length; i++) {
+            choice[i].onclick = function() {
+                console.log(this.text);
+                choicePicked = (this.text);
+            }
+        }
         console.log(response)
     });
 
     function questions() {
         $("#question").html(questionsAnswers["0"].results["0"].question);
-        $("#opt1").html(questionsAnswers["0"].results["0"].correct_answer);
-        $("#opt2").html(questionsAnswers["0"].results["0"].incorrect_answers["0"]);
-        $("#opt3").html(questionsAnswers["0"].results["0"].incorrect_answers["1"]);
-        $("#opt4").html(questionsAnswers["0"].results["0"].incorrect_answers["2"]);
+
     }
 
     function startTimer(duration, display) {
@@ -50,11 +67,6 @@ $(function() {
         }, 1000);
     }
 
-    var choice = document.getElementsByClassName("list-group-item");
-    for (i = 0; i < choice.length; i++) {
-        choice[i].onclick = function() {
-            console.log(this.text);
-        }
-    }
+
 
 });
