@@ -8,6 +8,10 @@ $(function() {
         $("#options").show();
         $("#tLeft").show();
         questions();
+        jQuery(function($) {
+            display = $("#timer");
+            startTimer(15, display);
+        })
     });
 
 
@@ -45,8 +49,12 @@ $(function() {
             }
         }, 1000);
     }
-    jQuery(function($) {
-        display = $("#timer");
-        startTimer(15, display);
-    })
+
+    var choice = document.getElementsByClassName("list-group-item");
+    for (i = 0; i < choice.length; i++) {
+        choice[i].onclick = function() {
+            console.log(this.text);
+        }
+    }
+
 });
