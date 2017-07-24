@@ -8,6 +8,11 @@ var totalScore = 0;
 var gameWins = 0;
 var gameLosses = 0;
 var gameTies = 0;
+var display = $("#timer");
+var duration = 5;
+var timer = duration,
+    seconds;
+
 
 
 $(function() {
@@ -23,11 +28,12 @@ $(function() {
         $("#tLeft").show();
         $("#results").show();
         newQuestion();
+        startTimer(5, display);
 
-        jQuery(function($) {
-            display = $("#timer");
-            startTimer(15, display);
-        })
+        // jQuery(function($) {
+        //     display = $("#timer");
+        //     startTimer(15, display);
+        // })
     });
 
     function newQuestion() {
@@ -53,10 +59,11 @@ $(function() {
             var choice = document.getElementsByClassName("list-group-item");
             for (i = 0; i < choice.length; i++) {
                 choice[i].onclick = function() {
-                    playCoin();
+
                     console.log(this.text);
                     choicePicked = (this.text);
                     check();
+                    timer = duration;
 
                 }
             }
@@ -67,12 +74,15 @@ $(function() {
     $("#again").click(function() {
 
         restart();
-
-        jQuery(function($) {
-            display = $("#timer");
-            startTimer(15, display);
-        })
+        // startTimer(15, display);
+        $("#timer").show();
+        timer = duration;
+        // jQuery(function($) {
+        //     display = $("#timer");
+        //     startTimer(15, display);
+        // })
     });
+
 
     function playCoin() {
 
@@ -91,13 +101,21 @@ $(function() {
         win.play();
     }
 
+    function playCorrect() {
+        yes.play();
+    }
+
+    function playIncorrect() {
+        no.play();
+    }
+
     function questions() {
         $("#question").html(questionsAnswers.results[0].question);
 
     }
 
     function startTimer(duration, display) {
-        var timer = duration,
+        timer = duration,
             seconds;
         setInterval(function() {
 
@@ -105,15 +123,18 @@ $(function() {
 
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            display.text("Time Remaining: " + seconds);
+            $("#timer").html("Time Remaining: " + seconds);
 
             if (--timer < 0) {
 
+                check();
                 timer = duration;
+
 
             }
         }, 1000);
     }
+
 
     function restart() {
         questionsAnswers = {};
@@ -128,12 +149,14 @@ $(function() {
         $("#losscount").html("0");
 
 
+
     }
 
     function check() {
 
         if (choicePicked === correctPick) {
             $("#win").html("You are correct!");
+            playCorrect();
             correct++;
             totalScore++;
             $("#wincount").html(correct);
@@ -168,7 +191,7 @@ $(function() {
             }
 
         } else {
-
+            playIncorrect();
             incorrect++;
             totalScore++;
             $("#losscount").html(incorrect);
