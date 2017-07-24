@@ -86,6 +86,11 @@ $(function() {
 
     }
 
+    function playWin() {
+        bgmusic.pause();
+        win.play();
+    }
+
     function questions() {
         $("#question").html(questionsAnswers.results[0].question);
 
@@ -119,6 +124,8 @@ $(function() {
         newQuestion();
         $("#finished").hide();
         bgmusic.play();
+        $("#wincount").html("0");
+        $("#losscount").html("0");
 
 
     }
@@ -140,6 +147,7 @@ $(function() {
                 $("#timer").hide();
                 if (correct > incorrect) {
                     $("#finished").html("YOU WIN!!");
+                    playWin();
                     gameWins++;
                 } else if (incorrect > correct) {
                     $("#finished").html("YOU LOSE!!! :(");
@@ -174,6 +182,7 @@ $(function() {
                 $("#timer").hide();
                 if (correct > incorrect) {
                     $("#finished").html("YOU WIN!!");
+                    playWin();
                     gameWins++;
                 } else if (incorrect > correct) {
                     $("#finished").html("YOU LOSE!!! :(");
