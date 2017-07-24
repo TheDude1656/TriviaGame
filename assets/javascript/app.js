@@ -12,10 +12,11 @@ var gameTies = 0;
 
 $(function() {
 
-
+    $("#totals").hide();
     $("#results").hide();
     $("#options").hide();
     $("#tLeft").hide();
+    $("#again").hide();
     $("#clickme").click(function() {
         $(this).remove();
         $("#options").show();
@@ -63,10 +64,25 @@ $(function() {
             questions();
         });
     }
+    $("#again").click(function() {
+
+        restart();
+
+        jQuery(function($) {
+            display = $("#timer");
+            startTimer(15, display);
+        })
+    });
 
     function playCoin() {
 
         audio.play();
+
+    }
+
+    function playLose() {
+        bgmusic.pause();
+        fail.play();
 
     }
 
@@ -94,6 +110,19 @@ $(function() {
         }, 1000);
     }
 
+    function restart() {
+        questionsAnswers = {};
+        answers = [];
+        correct = 0;
+        incorrect = 0;
+        totalScore = 0;
+        newQuestion();
+        $("#finished").hide();
+        bgmusic.play();
+
+
+    }
+
     function check() {
 
         if (choicePicked === correctPick) {
@@ -114,11 +143,17 @@ $(function() {
                     gameWins++;
                 } else if (incorrect > correct) {
                     $("#finished").html("YOU LOSE!!! :(");
+                    playLose();
                     gameLosses++;
                 } else if (correct === incorrect) {
                     $("#finished").html("TIE!!");
                     gameTies++;
                 }
+                $("#totals").show();
+                $("#finalwins").html(gameWins);
+                $("#finallosses").html(gameLosses);
+                $("#finalties").html(gameTies);
+                $("#again").show();
 
             } else if (totalScore <= 10) {
                 newQuestion();
@@ -142,11 +177,18 @@ $(function() {
                     gameWins++;
                 } else if (incorrect > correct) {
                     $("#finished").html("YOU LOSE!!! :(");
+                    playLose();
                     gameLosses++;
                 } else if (correct === incorrect) {
                     $("#finished").html("TIE!!");
                     gameTies++;
                 }
+                $("#totals").show();
+                $("#finalwins").html(gameWins);
+                $("#finallosses").html(gameLosses);
+                $("#finalties").html(gameTies);
+                $("#again").show();
+
             } else if (totalScore <= 10) {
                 newQuestion();
             }
