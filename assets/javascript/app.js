@@ -12,7 +12,7 @@ var display = $("#timer");
 var duration = 5;
 var timer = duration,
     seconds;
-
+var timerInterval;
 
 
 $(function() {
@@ -30,10 +30,7 @@ $(function() {
         newQuestion();
         startTimer(5, display);
 
-        // jQuery(function($) {
-        //     display = $("#timer");
-        //     startTimer(15, display);
-        // })
+
     });
 
     function newQuestion() {
@@ -74,13 +71,9 @@ $(function() {
     $("#again").click(function() {
 
         restart();
-        // startTimer(15, display);
         $("#timer").show();
         timer = duration;
-        // jQuery(function($) {
-        //     display = $("#timer");
-        //     startTimer(15, display);
-        // })
+
     });
 
 
@@ -117,7 +110,8 @@ $(function() {
     function startTimer(duration, display) {
         timer = duration,
             seconds;
-        setInterval(function() {
+
+        timerInterval = setInterval(function() {
 
             seconds = parseInt(timer % 60, 10);
 
@@ -143,6 +137,7 @@ $(function() {
         incorrect = 0;
         totalScore = 0;
         newQuestion();
+        startTimer(5, display);
         $("#finished").hide();
         bgmusic.play();
         $("#wincount").html("0");
@@ -164,6 +159,7 @@ $(function() {
             $("#options").empty();
 
             if (totalScore === 10) {
+                clearInterval(timerInterval);
                 $("#question").empty();
                 $("#options").empty();
                 $("#tLeft").hide();
@@ -199,6 +195,7 @@ $(function() {
             $("#options").empty();
 
             if (totalScore === 10) {
+                clearInterval(timerInterval);
                 $("#question").empty();
                 $("#options").empty();
                 $("#tLeft").hide();
